@@ -369,7 +369,7 @@ module "auto_scaling_group" {
       asg,
       {
         launch_template_id = module.launch_template.launch_template_ids[asg.launch_template_name],
-        subnet_ids         = [module.my_vpc.subnet_name_to_id[asg.subnet_name]]
+        subnet_ids         = [module.vpc.subnet_name_to_id[asg.subnet_name]]
       }
     )
   ]

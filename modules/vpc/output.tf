@@ -17,3 +17,9 @@ output "subnet_name_to_id" {
     for subnet in aws_subnet.private : subnet.tags["Name"] => subnet.id
   }
 }
+
+output "private_subnet_map" {
+  value = {
+    for subnet in aws_subnet.private : subnet.tags["Name"] => subnet.id
+  }
+}

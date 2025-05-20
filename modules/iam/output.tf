@@ -24,3 +24,10 @@ output "instance_profile_names" {
   }
 }
 
+output "lambda_role_arns" {
+  description = "Map of lambda role names to their ARNs"
+  value = {
+    for role_key, role in aws_iam_role.this :
+    role_key => role.arn
+  }
+}
