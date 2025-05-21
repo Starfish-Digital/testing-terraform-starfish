@@ -38,16 +38,16 @@ resource "aws_key_pair" "kp" {
   }
 }
 
-# resource "aws_s3_object" "pem_upload" {
-#   for_each = {
-#     for kp in var.key_pairs : kp.key_name => kp
-#     if kp.create_key_pair && kp.upload_to_s3
-#   }
+resource "aws_s3_object" "pem_upload" {
+  for_each = {
+    for kp in var.key_pairs : kp.key_name => kp
+    if kp.create_key_pair && kp.upload_to_s3
+  }
 
-#   bucket  = each.value.s3_bucket_name
-#   key     = "${each.key}.pem"
-#   content = tls_private_key.pk[each.key].private_key_pem
-#   provider = aws.test
+  bucket  = each.value.s3_bucket_name
+  key     = "key-pairs/${each.key}.pem"
+  content = tls_private_key.pk[each.key].private_key_pem
+  provider = aws.test
 
-#   tags = each.value.tags
-# }
+  tags = each.value.tags
+}
