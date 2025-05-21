@@ -477,11 +477,11 @@ variable "lambda_configs" {
     runtime       = string
     filename      = string
     tags          = map(string)
-    policy_statements = list(object({
-      effect    = string
-      actions   = list(string)
-      resources = list(string)
-    }))
+    # policy_statements = list(object({
+    #   effect    = string
+    #   actions   = list(string)
+    #   resources = list(string)
+    # }))
   }))
 }
 
