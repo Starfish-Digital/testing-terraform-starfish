@@ -20,8 +20,10 @@ resource "aws_security_group_rule" "ingress" {
   description       = var.ingress_rules[count.index].description
   security_group_id = var.security_group_id
  
-  cidr_blocks              = length(var.ingress_rules[count.index].cidr_blocks) > 0 ? var.ingress_rules[count.index].cidr_blocks : null
-  source_security_group_id = var.ingress_rules[count.index].source_security_group_id != "" ? var.ingress_rules[count.index].source_security_group_id : null
+  # cidr_blocks              = length(var.ingress_rules[count.index].cidr_blocks) > 0 ? var.ingress_rules[count.index].cidr_blocks : null
+  # source_security_group_id = var.ingress_rules[count.index].source_security_group_id != "" ? var.ingress_rules[count.index].source_security_group_id : null
+  cidr_blocks              = var.ingress_rules[count.index].source_security_group_id == null ? (length(var.ingress_rules[count.index].cidr_blocks) > 0 ? var.ingress_rules[count.index].cidr_blocks : null) : null
+  source_security_group_id = var.ingress_rules[count.index].source_security_group_id != null ? var.ingress_rules[count.index].source_security_group_id : null
 }
  
 resource "aws_security_group_rule" "egress" {
@@ -35,6 +37,8 @@ resource "aws_security_group_rule" "egress" {
   description       = var.egress_rules[count.index].description
   security_group_id = var.security_group_id
  
-  cidr_blocks              = length(var.egress_rules[count.index].cidr_blocks) > 0 ? var.egress_rules[count.index].cidr_blocks : null
-  source_security_group_id = var.egress_rules[count.index].source_security_group_id != "" ? var.egress_rules[count.index].source_security_group_id : null
+  # cidr_blocks              = length(var.egress_rules[count.index].cidr_blocks) > 0 ? var.egress_rules[count.index].cidr_blocks : null
+  # source_security_group_id = var.egress_rules[count.index].source_security_group_id != "" ? var.egress_rules[count.index].source_security_group_id : null
+  cidr_blocks              = var.egress_rules[count.index].source_security_group_id == null ? (length(var.egress_rules[count.index].cidr_blocks) > 0 ? var.egress_rules[count.index].cidr_blocks : null) : null
+  source_security_group_id = var.egress_rules[count.index].source_security_group_id != null ? var.egress_rules[count.index].source_security_group_id : null
 }
